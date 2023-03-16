@@ -58,7 +58,7 @@ addLineForm?.addEventListener("submit", (e) => {
   if (addLineForm instanceof HTMLFormElement) {
     const elements = addLineForm.elements;
 
-    const hasIGV = Boolean(elements["has_igv"].value);
+    const hasIGV = Boolean(elements["has_igv"].checked);
 
     const values = {
       name: elements["name"].value,

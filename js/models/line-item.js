@@ -1,4 +1,12 @@
 export class LineItem {
+    name;
+    quantity;
+    startingUnitPrice;
+    iscPercentage;
+    igvPercentage;
+    rcPercentage;
+    startingDiscount;
+    baseGlobalDiscount;
     constructor(name, quantity, startingUnitPrice, iscPercentage, igvPercentage, rcPercentage, startingDiscount, baseGlobalDiscount) {
         this.name = name;
         this.quantity = quantity;

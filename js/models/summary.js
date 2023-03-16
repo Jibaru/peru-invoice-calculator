@@ -1,4 +1,6 @@
 export class Summary {
+    lineItems;
+    baseGlobalDiscount;
     constructor(baseGlobalDiscount) {
         this.lineItems = [];
         this.baseGlobalDiscount = baseGlobalDiscount;

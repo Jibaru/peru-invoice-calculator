@@ -1,4 +1,8 @@
 export class GlobalDiscount {
+    startingGlobalDiscount;
+    igvPercentages;
+    iscPercentages;
+    rcPercentages;
     constructor(startingGlobalDiscount, igvPercentages, iscPercentages, rcPercentages) {
         this.startingGlobalDiscount = startingGlobalDiscount;
         this.igvPercentages = igvPercentages;
