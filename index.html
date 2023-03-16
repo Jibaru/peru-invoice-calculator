@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="css/reset.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main>
+      <section class="card">
+        <h1>Calculadora Facturación 🏁</h1>
+      </section>
+
+      <section class="card">
+        <form>
+          <div class="form-group">
+            <label for="global_discount">🌐 Descuento Global</label>
+            <input
+              type="number"
+              name="global_discount"
+              value="0.00"
+              id="stating-global-discount"
+            />
+          </div>
+          <div class="form-group">
+            <label for="igv">💵 % IGV</label>
+            <input type="number" name="igv" value="18.00" id="igv" step="any" />
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <form id="add-line-form">
+          <div class="form-group">
+            <label for="name">🗳️ Nombre</label>
+            <input type="text" name="name" placeholder="Producto 1" required />
+          </div>
+          <div class="form-group">
+            <label for="quantity">🔢 Cantidad</label>
+            <input
+              type="number"
+              name="quantity"
+              step="any"
+              placeholder="10.50"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="has_igv">☑️ Tiene IGV</label>
+            <input type="checkbox" name="has_igv" checked />
+          </div>
+          <div class="form-group">
+            <label for="isc">🎖️ % ISC</label>
+            <input type="number" name="isc" step="any" placeholder="30.00" />
+          </div>
+          <div class="form-group">
+            <label for="rc">🐡 % RC</label>
+            <input type="number" name="rc" step="any" placeholder="25.00" />
+          </div>
+          <div class="form-group">
+            <label for="starting_unit_price">💸 Precio Unitario</label>
+            <input
+              type="number"
+              name="starting_unit_price"
+              step="any"
+              placeholder="17.62"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="starting_discount">🔻 Descuento</label>
+            <input
+              type="number"
+              name="starting_discount"
+              step="any"
+              placeholder="19.90"
+            />
+          </div>
+          <button type="submit">➕ Agregar línea</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <table>
+          <thead>
+            <td>Cant.</td>
+            <td>Nombre</td>
+            <td>PU</td>
+            <td>VU</td>
+            <td>IGV</td>
+            <td>ISC</td>
+            <td>RC</td>
+            <td>Desc.</td>
+            <td>Subtotal</td>
+            <td>Total</td>
+          </thead>
+          <tbody id="line-rows"></tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <table>
+          <thead>
+            <td colspan="2">Resumen</td>
+          </thead>
+          <tbody id="summary-rows">
+            <tr>
+              <td>Total IGV</td>
+              <td id="total-igv">0</td>
+            </tr>
+            <tr>
+              <td>Total ISC</td>
+              <td id="total-isc">0</td>
+            </tr>
+            <tr>
+              <td>Total RC</td>
+              <td id="total-rc">0</td>
+            </tr>
+            <tr>
+              <td>Total Descuento Línea</td>
+              <td id="total-line-discount">0</td>
+            </tr>
+            <tr>
+              <td>Total Descuento Global</td>
+              <td id="total-global-discount">0</td>
+            </tr>
+            <tr>
+              <td>Subtotal</td>
+              <td id="subtotal">0</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td id="total">0</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+    <script src="js/app.js" type="module"></script>
+  </body>
+</html>
