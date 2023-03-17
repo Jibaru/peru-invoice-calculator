@@ -28,6 +28,15 @@
             <label for="igv">💵 % IGV</label>
             <input type="number" name="igv" value="18.00" id="igv" step="any" />
           </div>
+          <div class="form-group">
+            <label for="decimals-quantity">#️⃣ Cantidad de decimales</label>
+            <input
+              type="number"
+              name="decimals-quantity"
+              value="4"
+              id="decimals-quantity"
+            />
+          </div>
         </form>
       </section>
 
@@ -48,16 +57,29 @@
             />
           </div>
           <div class="form-group">
-            <label for="has_igv">☑️ Tiene IGV</label>
-            <input type="checkbox" name="has_igv" checked />
+            <label for="is_free">🆓 Gratuita</label>
+            <input type="checkbox" name="is_free" />
           </div>
           <div class="form-group">
-            <label for="isc">🎖️ % ISC</label>
+            <label for="has_igv">💰 Tiene IGV</label>
+            <div>
+              <input type="radio" name="has_igv" checked required value="1" />
+              SI
+              <input type="radio" name="has_igv" required value="2" /> Exonerada
+              <input type="radio" name="has_igv" required value="3" /> Inafecta
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="isc">🚌 % ISC</label>
             <input type="number" name="isc" step="any" placeholder="30.00" />
           </div>
           <div class="form-group">
             <label for="rc">🐡 % RC</label>
             <input type="number" name="rc" step="any" placeholder="25.00" />
+          </div>
+          <div class="form-group">
+            <label for="icbper">🛍️ ICBPER</label>
+            <input type="number" name="icbper" step="any" placeholder="0.5" />
           </div>
           <div class="form-group">
             <label for="starting_unit_price">💸 Precio Unitario</label>
@@ -92,6 +114,7 @@
             <td>IGV</td>
             <td>ISC</td>
             <td>RC</td>
+            <td>ICBPER</td>
             <td>Desc.</td>
             <td>Subtotal</td>
             <td>Total</td>
@@ -107,28 +130,48 @@
           </thead>
           <tbody id="summary-rows">
             <tr>
-              <td>Total IGV</td>
-              <td id="total-igv">0</td>
+              <td>Total Exonerada</td>
+              <td id="total-exonerated">0</td>
             </tr>
             <tr>
-              <td>Total ISC</td>
-              <td id="total-isc">0</td>
+              <td>Total Inafecta</td>
+              <td id="total-unaffected">0</td>
+            </tr>
+            <tr>
+              <td>Total IGV (Sin desc. global)</td>
+              <td id="total-igv-without-desc">0</td>
+            </tr>
+            <tr>
+              <td>Total IGV (Con desc. global)</td>
+              <td id="total-igv-with-desc">0</td>
+            </tr>
+            <tr>
+              <td>Total ISC (Sin desc. global)</td>
+              <td id="total-isc-without-desc">0</td>
+            </tr>
+            <tr>
+              <td>Total ISC (Con desc. global)</td>
+              <td id="total-isc-with-desc">0</td>
             </tr>
             <tr>
               <td>Total RC</td>
               <td id="total-rc">0</td>
             </tr>
             <tr>
-              <td>Total Descuento Línea</td>
+              <td>Total ICBPER</td>
+              <td id="total-icbper">0</td>
+            </tr>
+            <tr>
+              <td>🔻 Total Descuento Línea</td>
               <td id="total-line-discount">0</td>
             </tr>
             <tr>
-              <td>Total Descuento Global</td>
+              <td>🔻 Total Descuento Global</td>
               <td id="total-global-discount">0</td>
             </tr>
             <tr>
-              <td>Subtotal</td>
-              <td id="subtotal">0</td>
+              <td>Total Gravada</td>
+              <td id="total-taxed">0</td>
             </tr>
             <tr>
               <td>Total</td>
