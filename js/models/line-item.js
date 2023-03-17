@@ -5,17 +5,25 @@ export class LineItem {
     iscPercentage;
     igvPercentage;
     rcPercentage;
+    icbperUnitAmount;
     startingDiscount;
     baseGlobalDiscount;
-    constructor(name, quantity, startingUnitPrice, iscPercentage, igvPercentage, rcPercentage, startingDiscount, baseGlobalDiscount) {
+    isUnnafected;
+    isExonerated;
+    isFree;
+    constructor(name, quantity, startingUnitPrice, iscPercentage, igvPercentage, rcPercentage, icbperUnitAmount, startingDiscount, baseGlobalDiscount, isUnnafected = false, isExonerated = false, isFree = false) {
         this.name = name;
         this.quantity = quantity;
         this.startingUnitPrice = startingUnitPrice;
         this.iscPercentage = iscPercentage;
         this.igvPercentage = igvPercentage;
         this.rcPercentage = rcPercentage;
+        this.icbperUnitAmount = icbperUnitAmount;
         this.startingDiscount = startingDiscount;
         this.baseGlobalDiscount = baseGlobalDiscount;
+        this.isUnnafected = isUnnafected;
+        this.isExonerated = isExonerated;
+        this.isFree = isFree;
     }
     setBaseGlobalDiscount(baseGlobalDiscount) {
         this.baseGlobalDiscount = baseGlobalDiscount;
@@ -32,7 +40,13 @@ export class LineItem {
     get hasRC() {
         return this.rcPercentage != 0;
     }
+    get hasICBPER() {
+        return this.icbperUnitAmount > 0;
+    }
     get igv() {
+        if (this.isExonerated || this.isUnnafected) {
+            return 0;
+        }
         return this.igvPercentage / 100;
     }
     get isc() {
@@ -45,7 +59,7 @@ export class LineItem {
         let divider = 1.0;
         if (this.hasIGV && this.hasISC && this.hasRC) {
             const firstBase = this.startingUnitPrice / (1 + this.igv + this.rc);
-            divider = firstBase / (1 + this.isc);
+            return firstBase / (1 + this.isc);
         }
         else if (this.hasIGV && this.hasISC && !this.hasRC) {
             divider = (1 + this.isc) * (1 + this.igv);
@@ -60,7 +74,7 @@ export class LineItem {
     }
     get unitPrice() {
         const quantity = this.quantity == 0 ? 1 : this.quantity;
-        const rcPerUnit = this.rcTotal / this.quantity;
+        const rcPerUnit = this.rcTotal / quantity;
         return this.startingUnitPrice - rcPerUnit;
     }
     get discount() {
@@ -91,6 +105,12 @@ export class LineItem {
         }
         return ((this.unitValue * this.quantity - this.discount + this.iscTotal) *
             this.igv);
+    }
+    get icbperTotal() {
+        if (!this.hasICBPER) {
+            return 0;
+        }
+        return this.icbperUnitAmount * this.quantity;
     }
     get subtotal() {
         return this.quantity * this.unitValue - this.discount;
