@@ -6,8 +6,12 @@ export class LineItem {
     public readonly iscPercentage: number,
     public igvPercentage: number,
     public readonly rcPercentage: number,
+    public readonly icbperUnitAmount: number,
     public readonly startingDiscount: number,
-    public baseGlobalDiscount: number
+    public baseGlobalDiscount: number,
+    public readonly isUnnafected: boolean = false,
+    public readonly isExonerated: boolean = false,
+    public readonly isFree: boolean = false
   ) {}
 
   public setBaseGlobalDiscount(baseGlobalDiscount: number) {
@@ -30,7 +34,15 @@ export class LineItem {
     return this.rcPercentage != 0;
   }
 
+  public get hasICBPER(): boolean {
+    return this.icbperUnitAmount > 0;
+  }
+
   private get igv(): number {
+    if (this.isExonerated || this.isUnnafected) {
+      return 0;
+    }
+
     return this.igvPercentage / 100;
   }
 
@@ -47,7 +59,7 @@ export class LineItem {
 
     if (this.hasIGV && this.hasISC && this.hasRC) {
       const firstBase = this.startingUnitPrice / (1 + this.igv + this.rc);
-      divider = firstBase / (1 + this.isc);
+      return firstBase / (1 + this.isc);
     } else if (this.hasIGV && this.hasISC && !this.hasRC) {
       divider = (1 + this.isc) * (1 + this.igv);
     } else if (this.hasISC && !this.hasIGV) {
@@ -62,7 +74,7 @@ export class LineItem {
   public get unitPrice(): number {
     const quantity = this.quantity == 0 ? 1 : this.quantity;
 
-    const rcPerUnit = this.rcTotal / this.quantity;
+    const rcPerUnit = this.rcTotal / quantity;
 
     return this.startingUnitPrice - rcPerUnit;
   }
@@ -106,6 +118,14 @@ export class LineItem {
       (this.unitValue * this.quantity - this.discount + this.iscTotal) *
       this.igv
     );
+  }
+
+  public get icbperTotal(): number {
+    if (!this.hasICBPER) {
+      return 0;
+    }
+
+    return this.icbperUnitAmount * this.quantity;
   }
 
   public get subtotal(): number {
