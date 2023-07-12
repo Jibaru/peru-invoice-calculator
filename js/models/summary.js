@@ -25,7 +25,7 @@ export class Summary {
         return (this.totalTaxed +
             this.totalExonerated +
             this.totalUnaffected +
-            this.totalRC +
+            this.totalRCWithoutGlobalDiscount +
             this.totalIGVWithoutGlobalDiscount +
             this.totalISCWithoutGlobalDiscount +
             this.totalICBPER);
@@ -69,6 +69,22 @@ export class Summary {
         const base = taxableBase / totalOverBasePercentage;
         return base * (totalOverBasePercentage - 1);
     }
+    get totalRCDiscount() {
+        let totalOverBasePercentage = 1.0;
+        let totalOverBaseTaxedPercentage = 1.0;
+        totalOverBaseTaxedPercentage += this.igvPercentage / 100;
+        this.iscPercentages.forEach((iscPercentage) => {
+            totalOverBasePercentage += iscPercentage / 100;
+        });
+        const taxableBase = this.startingGlobalDiscount / totalOverBaseTaxedPercentage;
+        totalOverBaseTaxedPercentage = 1.0;
+        if (this.rcPercentages.size > 0) {
+            this.rcPercentages.forEach((rcPercentage) => {
+                totalOverBaseTaxedPercentage += rcPercentage / 100;
+            });
+        }
+        return taxableBase * (totalOverBaseTaxedPercentage - 1);
+    }
     get totalIGV() {
         return this.lineItems.reduce((total, lineItem) => {
             return total + lineItem.igvTotal;
@@ -89,6 +105,9 @@ export class Summary {
         return this.lineItems.reduce((total, lineItem) => {
             return total + lineItem.rcTotal;
         }, 0.0);
+    }
+    get totalRCWithoutGlobalDiscount() {
+        return this.totalRC - this.totalRCDiscount;
     }
     get totalICBPER() {
         return this.lineItems.reduce((total, lineItem) => {

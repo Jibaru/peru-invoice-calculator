@@ -101,10 +101,10 @@ export class LineItem {
       (this.unitValue * this.quantity - this.discount + this.iscTotal) *
       this.rc;
 
-    if (this.baseGlobalDiscount != 0) {
+    /*if (this.baseGlobalDiscount != 0) {
       const discount = this.baseGlobalDiscount * this.rcPercentage;
       return total - discount;
-    }
+    }*/
 
     return total;
   }

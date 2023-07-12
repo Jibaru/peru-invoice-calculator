@@ -16,7 +16,11 @@ const totalIscWithoutDescTd: HTMLElement | null = document.getElementById(
 const totalIscWithDescTd: HTMLElement | null = document.getElementById(
   "total-isc-with-desc"
 );
-const totalRcTd: HTMLElement | null = document.getElementById("total-rc");
+const totalRcWithoutDescTd: HTMLElement | null = document.getElementById(
+  "total-rc-without-desc"
+);
+const totalRcWithDescTd: HTMLElement | null =
+  document.getElementById("total-rc-with-desc");
 const totalIcbperTd: HTMLElement | null =
   document.getElementById("total-icbper");
 const totalLineDiscountTd: HTMLElement | null = document.getElementById(
@@ -33,18 +37,27 @@ export const RenderSummary = (summary: Summary, decimalsQuantity: number) => {
     summary.totalExonerated.toFixed(decimalsQuantity);
   totalUnaffectedTd.innerHTML =
     summary.totalUnaffected.toFixed(decimalsQuantity);
+
   totalIgvWithDescTd.innerHTML = summary.totalIGV.toFixed(decimalsQuantity);
   totalIgvWithoutDescTd.innerHTML =
     summary.totalIGVWithoutGlobalDiscount.toFixed(decimalsQuantity);
+
   totalIscWithDescTd.innerHTML = summary.totalISC.toFixed(decimalsQuantity);
   totalIscWithoutDescTd.innerHTML =
     summary.totalISCWithoutGlobalDiscount.toFixed(decimalsQuantity);
-  totalRcTd.innerHTML = summary.totalRC.toFixed(decimalsQuantity);
+
+  totalRcWithDescTd.innerHTML = summary.totalRC.toFixed(decimalsQuantity);
+  totalRcWithoutDescTd.innerHTML =
+    summary.totalRCWithoutGlobalDiscount.toFixed(decimalsQuantity);
+
   totalIcbperTd.innerHTML = summary.totalICBPER.toFixed(decimalsQuantity);
+
   totalLineDiscountTd.innerHTML =
     summary.totalLineDiscount.toFixed(decimalsQuantity);
+
   totalGlobalDiscountTd.innerHTML =
     summary.totalGlobalDiscount.toFixed(decimalsQuantity);
+
   totalTaxedTd.innerHTML = summary.totalTaxed.toFixed(decimalsQuantity);
   totalTd.innerHTML = summary.total.toFixed(decimalsQuantity);
 };
